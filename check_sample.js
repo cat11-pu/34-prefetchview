@@ -5,6 +5,7 @@ import { render } from "./app.js";
 
 const spec = JSON.parse(fs.readFileSync(process.argv[2] || "sample/prefetch.json", "utf8"));
 let cache = [];
+cache.capacity = spec.capacity;
 let hits = 0;
 let prefetchHits = 0;
 const evicted = [];
@@ -16,6 +17,7 @@ for (let index = 0; index < spec.accesses.length; index += 1) {
   if (result.hit) hits += 1;
   if (result.evicted) evicted.push(result.evicted);
   const planned = plan(spec.accesses, index, spec.distance, spec.budget, cache);
+  if (planned.evicted) evicted.push(...planned.evicted);
   if (planned.prefetch.some((item) => item === spec.accesses[index + 1])) prefetchHits += 1;
   deferred = deferred.concat(planned.deferred);
 }
