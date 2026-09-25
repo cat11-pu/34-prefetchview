@@ -1,0 +1,7 @@
+{
+  "no_capacity_code": "E_NO_CAPACITY",
+  "capacity": 3,
+  "distance": 2,
+  "budget": 2,
+  "accesses": ["a", "b", "c", "a", "d", "e", "b", "f", "a", "g"]
+}
